@@ -4,13 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.view.MotionEvent
-import android.view.MotionEvent.ACTION_DOWN
-import android.view.MotionEvent.ACTION_UP
+import android.view.MotionEvent.*
 import android.view.SurfaceView
 
 
 @SuppressLint("ViewConstructor")
-class GameView constructor(context: Context, private var size: Point) : SurfaceView(context), Runnable {
+class GameView constructor(context: Context, size: Point) : SurfaceView(context), Runnable {
 
     private var gameThread: Thread = Thread(this)
     @Volatile private var playing = false
@@ -24,6 +23,7 @@ class GameView constructor(context: Context, private var size: Point) : SurfaceV
 
     init{
         playing = true
+        Screen.set(size)
     }
 
     override fun run() {
@@ -38,8 +38,7 @@ class GameView constructor(context: Context, private var size: Point) : SurfaceV
     }
 
     private fun update() {
-        if(isMoving)
-            mattXPosition+=(walkSpeedPerSecond/fps)
+        Joystick.update()
     }
 
     private fun draw() {
@@ -50,7 +49,7 @@ class GameView constructor(context: Context, private var size: Point) : SurfaceV
             paint.textSize = 45f
             canvas.drawText("FPS: " + fps, 20f, 40f, paint)
             canvas.drawBitmap(bitmapMatt, mattXPosition, 200f, paint)
-            Joystick.draw(canvas, size)
+            Joystick.draw(canvas)
             holder.unlockCanvasAndPost(canvas)
         }
     }
@@ -70,10 +69,11 @@ class GameView constructor(context: Context, private var size: Point) : SurfaceV
         gameThread.start()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when(event.action) {
-            ACTION_DOWN -> isMoving = true
-            ACTION_UP -> isMoving = false
+            ACTION_DOWN or ACTION_MOVE -> Interface.handleClick(event.x, event.y)
+            ACTION_UP -> Interface.removeClick()
         }
 
         return true
