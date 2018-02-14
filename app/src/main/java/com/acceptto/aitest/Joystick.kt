@@ -5,21 +5,23 @@ import android.graphics.Color
 import android.graphics.Paint
 
 
-//todo: make it so wherever user clicks on screen is starting point for joystick, disappears on lift finger
+//todo: update getDeltaX and getDeltaY to be limited by boundary radius
 object Joystick {
-    private val boundaryRadius = 100f;
+    private val boundaryRadius = 100f
     private var startingX = -1f
     private var startingY = -1f
     private var x = startingX
     private var y = startingY
     private var isJoystickActice = false
+    private var deltaX = 0.0
+    private var deltaY = 0.0
 
     fun update() {
         val clickPosition = Interface.getClickPoisition()
         if(clickPosition.x >= 0) {
             if(isJoystickActice) {
-                val deltaX: Double = clickPosition.x.toDouble() - startingX
-                val deltaY: Double = clickPosition.y.toDouble() - startingY
+                deltaX = clickPosition.x.toDouble() - startingX
+                deltaY = clickPosition.y.toDouble() - startingY
                 val distance = Math.sqrt(Math.pow(deltaX, 2.0)+(deltaY*deltaY))
                 val movementAngle = Math.atan2(deltaY, deltaX)
                 if(distance >= boundaryRadius) {
@@ -38,6 +40,8 @@ object Joystick {
             }
         } else {
             isJoystickActice = false
+            deltaX = 0.0
+            deltaY = 0.0
         }
     }
 
@@ -49,5 +53,13 @@ object Joystick {
             paint.color = Color.argb(150, 255, 255, 255)
             canvas.drawCircle(startingX, startingY, boundaryRadius, paint)
         }
+    }
+
+    fun getDeltaX(): Double {
+        return deltaX
+    }
+
+    fun getDeltaY(): Double {
+        return deltaY
     }
 }

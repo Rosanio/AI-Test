@@ -16,10 +16,7 @@ class GameView constructor(context: Context, size: Point) : SurfaceView(context)
     private var paint = Paint()
     private var fps: Long = 0
     private var timeThisFrame: Long = 0
-    private var bitmapMatt = BitmapFactory.decodeResource(this.resources, R.drawable.bob)
-    private var isMoving = false
-    private val walkSpeedPerSecond = 150
-    private var mattXPosition: Float = 10f
+    private val matt: Matt = Matt(this)
 
     init{
         playing = true
@@ -39,6 +36,7 @@ class GameView constructor(context: Context, size: Point) : SurfaceView(context)
 
     private fun update() {
         Joystick.update()
+        matt.update()
     }
 
     private fun draw() {
@@ -48,7 +46,7 @@ class GameView constructor(context: Context, size: Point) : SurfaceView(context)
             paint.color = Color.argb(255, 249, 129, 0)
             paint.textSize = 45f
             canvas.drawText("FPS: " + fps, 20f, 40f, paint)
-            canvas.drawBitmap(bitmapMatt, mattXPosition, 200f, paint)
+            matt.draw(canvas)
             Joystick.draw(canvas)
             holder.unlockCanvasAndPost(canvas)
         }
