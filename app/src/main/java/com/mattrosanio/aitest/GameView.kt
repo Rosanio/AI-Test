@@ -16,11 +16,14 @@ class GameView constructor(context: Context, size: Point) : SurfaceView(context)
     private var paint = Paint()
     private var fps: Long = 0
     private var timeThisFrame: Long = 0
-    private val matt: Matt = Matt(this)
+    private var matt: Matt? = null
+    private var bot: Bot? = null
 
     init{
         playing = true
         Screen.set(size)
+        matt = Matt(this)
+        bot = Bot()
     }
 
     override fun run() {
@@ -36,7 +39,8 @@ class GameView constructor(context: Context, size: Point) : SurfaceView(context)
 
     private fun update() {
         Joystick.update()
-        matt.update()
+        matt?.update()
+        bot?.update()
     }
 
     private fun draw() {
@@ -46,7 +50,8 @@ class GameView constructor(context: Context, size: Point) : SurfaceView(context)
             paint.color = Color.argb(255, 249, 129, 0)
             paint.textSize = 45f
             canvas.drawText("FPS: " + fps, 20f, 40f, paint)
-            matt.draw(canvas)
+            matt?.draw(canvas)
+            bot?.draw(canvas)
             Joystick.draw(canvas)
             holder.unlockCanvasAndPost(canvas)
         }

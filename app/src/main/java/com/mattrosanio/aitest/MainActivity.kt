@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         hideStatusAndNavigationBars()
     }
 
-    fun hideStatusAndNavigationBars() {
+    private fun hideStatusAndNavigationBars() {
         val decorView = window.decorView
         val uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         decorView.systemUiVisibility = uiOptions

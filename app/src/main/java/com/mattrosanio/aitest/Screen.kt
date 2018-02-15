@@ -21,8 +21,8 @@ object Screen {
             return width
         }
 
-        fun of2(numerator: Int): Float {
-            return (numerator* width)/2
+        fun half(): Float {
+            return width / 2
         }
 
         fun of4(numerator: Int): Float {
@@ -53,8 +53,8 @@ object Screen {
             return height
         }
 
-        fun of2(numerator: Int): Float {
-            return (numerator* height)/2
+        fun half(): Float {
+            return height / 2
         }
 
         fun of4(numerator: Int): Float {
