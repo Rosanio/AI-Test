@@ -1,4 +1,4 @@
-package com.acceptto.aitest
+package com.mattrosanio.aitest
 
 import android.graphics.Point
 import android.support.v7.app.AppCompatActivity

@@ -1,4 +1,4 @@
-package com.acceptto.aitest
+package com.mattrosanio.aitest
 
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
@@ -14,10 +14,10 @@ class Matt constructor(context: SurfaceView) {
     private var mattYPosition: Float = 10f
 
     fun update() {
-        val deltaX = Joystick.getDeltaX()
-        val deltaY = Joystick.getDeltaY()
-        mattXPosition += deltaX.toFloat()
-        mattYPosition += deltaY.toFloat()
+        val deltaX = Joystick.getJoystickXComponent()
+        val deltaY = Joystick.getJoystickYComponent()
+        mattXPosition += deltaX.toFloat()/7
+        mattYPosition += deltaY.toFloat()/7
     }
 
     fun draw(canvas: Canvas) {

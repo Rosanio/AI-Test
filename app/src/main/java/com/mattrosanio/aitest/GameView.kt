@@ -1,4 +1,4 @@
-package com.acceptto.aitest
+package com.mattrosanio.aitest
 
 import android.annotation.SuppressLint
 import android.content.Context
